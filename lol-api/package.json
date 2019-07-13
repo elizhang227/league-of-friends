@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www"
+    "dev": "nodemon ./bin/www",
+    "db:reset": "psql league -f ./sql/schema.sql -U eli && psql league -f ./sql/seed.sql -U eli"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
