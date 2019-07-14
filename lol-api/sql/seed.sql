@@ -6,4 +6,4 @@ values
 insert into candidates
     (id, username, candidate_id)
 values
-    (1, 'Auburn', 1)
+    (1, 'Auburn', 1);
