@@ -11,7 +11,7 @@ function App() {
       <Router>
         <Route path='/' exact component={CandidatesList} />
         <Route path='/tier' component={ChooseTier} />
-        <Route path='/test/:rank?' component={ApiList} />
+        <Route path='/test/:rank?/:division?' component={ApiList} />
       </Router>
     </div>
   );

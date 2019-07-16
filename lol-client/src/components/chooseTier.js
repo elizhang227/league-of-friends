@@ -3,30 +3,53 @@ import { Link, Redirect } from 'react-router-dom';
 
 class ChooseTier extends Component {
     state = {
-        tier: ''
+        tier: '',
+        division: ''
     }
 
-    handleClick = async (e) => {
-        let innerHTML = e.target.innerHTML;
-        let rank = innerHTML.toUpperCase();
+    handleTierClick = async (e) => {
+        console.log(e.target.value)
+        let value = e.target.value;
+        let rank = value.toUpperCase();
         this.setState({
             tier: rank
         })
     }
 
+    handleDivisionClick = async (e) => {
+        console.log(e.target.value)
+        let division = e.target.value;
+        this.setState({
+            division: division
+        })
+    }
+
     render() {
-        const { tier } = this.state
+        const { tier, division } = this.state
         return (
             <div>
                 <h1>tier list</h1>
-                <button onClick={(e) => this.handleClick(e)}>bronze</button>
-                <button onClick={(e) => this.handleClick(e)}>silver</button>
-                <button onClick={(e) => this.handleClick(e)}>gold</button>
-                <button onClick={(e) => this.handleClick(e)}>platinum</button>
-                <button onClick={(e) => this.handleClick(e)}>diamond</button>
-                <button onClick={(e) => this.handleClick(e)}>master</button>
-                <button onClick={(e) => this.handleClick(e)}>challenger</button>
-                {(!!tier) ? <Redirect to={`/test/${tier}`} /> : ''}
+                <form action={`/test/${tier}/${division}`}>
+                    <select id='tier' onChange={(e) => this.handleTierClick(e)}>
+                        <option label='Choose Tier' selected disabled='disabled'/>
+                        <option label='Bronze' value='Bronze' />
+                        <option label='Silver' value='Silver' />
+                        <option label='Gold' value='Gold' />
+                        <option label='Platinum' value='Platinum' />
+                        <option label='Diamond' value='Diamond' />
+                        <option label='Master' value='Master' />
+                        <option label='Challenger' value='Challenger' />
+                    </select>
+                    <select id='division' onChange={(e) => this.handleDivisionClick(e)}>
+                        <option label='Choose Div' selected disabled='disabled'/>
+                        <option label='I' value='I' />
+                        <option label='II' value='II' />
+                        <option label='III' value='III' />
+                        <option label='IV' value='IV' />
+                    </select>
+                    {/* {(!!tier && !!division) ? <Redirect to={`/test/${tier}`} /> : ''} */}
+                    <button type='submit'>search</button>
+                </form>
             </div>
         )
     }
