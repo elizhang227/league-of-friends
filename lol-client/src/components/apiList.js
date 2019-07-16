@@ -34,7 +34,7 @@ class ApiList extends Component {
                 <ul>
                     {people.map((person, index) => 
                         <li key={`person${index}`}>
-                            <Link to={`post/${person.leagueId}`}>{person.summonerName}</Link>
+                            <Link to={`/matches/${person.summonerName}`}>{person.summonerName}</Link>
                             <p>Win Ratio: {(person.wins / (person.wins + person.losses) * 100).toFixed(2)}% {person.wins}W {person.losses}L</p>
                         </li>
                     )}

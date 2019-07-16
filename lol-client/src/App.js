@@ -13,7 +13,7 @@ function App() {
         <Route path='/' exact component={CandidatesList} />
         <Route path='/tier' component={ChooseTier} />
         <Route path='/test/:rank?/:division?' component={ApiList} />
-        <Route path='/matches' component={MatchList} /> 
+        <Route path='/matches/:ign?' component={MatchList} /> 
       </Router>
     </div>
   );
