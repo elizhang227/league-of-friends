@@ -26,13 +26,16 @@ class ApiList extends Component {
 
     render() {
         const { people } = this.state;
+        const rank = this.props.match.params.rank;
+        const division = this.props.match.params.division;
         return (
             <div>
-                <h2>apiList</h2>
+                <h2>List of {rank} {division} Players</h2>
                 <ul>
                     {people.map((person, index) => 
                         <li key={`person${index}`}>
                             <Link to={`post/${person.leagueId}`}>{person.summonerName}</Link>
+                            <p>Win Ratio: {(person.wins / (person.wins + person.losses) * 100).toFixed(2)}% {person.wins}W {person.losses}L</p>
                         </li>
                     )}
                 </ul>
