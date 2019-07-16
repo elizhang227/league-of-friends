@@ -3,13 +3,16 @@ import React, { Component } from 'react';
 class MatchList extends Component {
     state = {
         matches: [],
-        userInfo: []
+        userInfo: [],
+        test: []
     }
 
     async componentDidMount() {
-        const userInfo = await this.loadUserInfo()
+        const championInfo = await this.loadChampionInfo();
+        const userInfo = await this.loadUserInfo();
         this.setState({
-            userInfo: userInfo
+            userInfo: userInfo,
+            test: championInfo.data
         })
         const matches = await this.loadData(this.state.userInfo.accountId);
         //nested object so need matches.matches
@@ -35,22 +38,50 @@ class MatchList extends Component {
         const data = response.json();
         return data;
     }
+
+    loadChampionInfo = async () => {
+        const url = `http://ddragon.leagueoflegends.com/cdn/6.24.1/data/en_US/champion.json`;
+        const response = await fetch(url);
+        const data = response.json();
+        return data;
+    }
+
+    // test = async (poo, matches) => {
+    //     //console.log('hihihi')
+    //     for (let i=0; i < poo.length; i++) {
+    //         if (poo[i].key === matches[i].champion) {
+    //             console.log('it works')
+    //         }
+    //     }
+    // }
     
     render() {
-        const { matches, userInfo } = this.state
+        const { matches, userInfo, test } = this.state
+        let poo = [];
+        for (let [key, value] of Object.entries(test)) {
+            poo.push({name: `${key}`, key: `${value.key}`})
+        }
+
+        console.log('this is matches', matches)
+
         return (
             <div>
                 <h2>list of matches</h2>
                 <ul>
-                    {matches.map((match, index) => 
+                    {matches.map((match, index) => {
+                        
+                        // this.test(poo, matches)
+                        return (
                         <li key={`match${index}`}>
+                            <p>{test.id}</p>
                             <p>Champion: {match.champion}</p>
                             <p>TimeStamp: {match.timestamp}</p>
                             <p>Queue: {match.queue}</p>
                             <p>Role: {match.role}</p>
                             <p>Lane: {match.lane}</p>
                         </li>
-                    )}
+                        )
+                    })}
                 </ul>
             </div>
         )
