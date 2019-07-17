@@ -18,6 +18,25 @@ const StyledUl = styled.ul`
     padding: 0 10px;
 `;
 
+const InnerLi = styled.li`
+    list-style-type: none;
+`;
+
+const InnerUl = styled.ul`
+    border-bottom: 3px solid red;
+`;
+
+const GameInfo = props => {
+    console.log('props', props)
+    return (props.gameInfo !== undefined ? 
+        <ul>
+            {props.gameInfo.participantIdentities.map((player, index) => 
+                <li key={`player${index}`}>
+                    {player.player.accountId}
+                </li>)}
+        </ul> 
+                                        : null);
+}
 
 class SoloMatchList extends Component {
     state = {
@@ -118,29 +137,32 @@ class SoloMatchList extends Component {
             <div>
                 <StyledHeader>Match History</StyledHeader>
                 <StyledUl>
-                    {matches.map((match, index) => 
-                        <StyledLi key={`match${index}`}>
+                    {matches.map((match, index) => {
+                        console.log('index', gameInfo[index])
+                        return <StyledLi key={`match${index}`}>
                             <p>Champion: {match.champion}</p>
                             <p>TimeStamp: {match.timestamp}</p>
                             <p>Queue: {match.queue}</p>
                             <p>Role: {match.role}</p>
                             <p>Lane: {match.lane}</p>
+                            <GameInfo gameInfo={gameInfo[index]}/>
                         </StyledLi>
-                    )}
+                    })}
                 </StyledUl>
 
-                <StyledHeader>Game Info</StyledHeader>
+                {/* <StyledHeader>Game Info</StyledHeader>
                 <StyledUl>
                     {gameInfo.map((stats, index) => 
                         <li key={`stats${index}`}>
-                            <p>qwdqw: {stats.participantIdentities.map((players, index) => 
-                                <ul>
-                                    <li>{players.player.accountId}</li>
-                                </ul>
-                            )}</p>
+                            <InnerUl>
+                                {stats.participantIdentities.map((players, index) => 
+                                <InnerLi key={`players${index}`}>
+                                    <p>{players.player.accountId}</p>
+                                </InnerLi>)}
+                            </InnerUl>
                         </li>
                     )}
-                </StyledUl>
+                </StyledUl> */}
             </div>
         )
     }
