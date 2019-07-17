@@ -24,9 +24,9 @@ class MatchList extends Component {
             //console.log('x', x[i])
             for (let j=0; j < 100; j++) {
                 if (parseInt(poo[i].key) === x[j].champion) {
-                    console.log(poo[i].name)
+                    //console.log(poo[i].name)
                     x[j].champion = poo[i].name;
-                    console.log('new value,', x[j].champion)
+                    //console.log('new value,', x[j].champion)
                 }
             }
         }
@@ -39,17 +39,19 @@ class MatchList extends Component {
 
     loadUserInfo = async () => {
         //console.log('this is props', this.props.match.params.ign)
+        const apiKey = process.env.REACT_APP_API_KEY;
         const ign = this.props.match.params.ign;
         const proxyurl = "https://cors-anywhere.herokuapp.com/";
-        const url = `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${ign}?api_key=RGAPI-2d6c539c-756d-44e3-a755-0056a0635ba2`;
+        const url = `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${ign}?api_key=${apiKey}`;
         const response = await fetch(proxyurl + url);
         const data = response.json();
         return data;
     }
 
     loadData = async (id) => {
+        const apiKey = process.env.REACT_APP_API_KEY;
         const proxyurl = "https://cors-anywhere.herokuapp.com/";
-        const url = `https://na1.api.riotgames.com/lol/match/v4/matchlists/by-account/${id}?queue=420&season=13&beginIndex=0&api_key=RGAPI-2d6c539c-756d-44e3-a755-0056a0635ba2`;
+        const url = `https://na1.api.riotgames.com/lol/match/v4/matchlists/by-account/${id}?queue=420&season=13&beginIndex=0&api_key=${apiKey}`;
         const response = await fetch(proxyurl + url);
         const data = response.json();
         return data;

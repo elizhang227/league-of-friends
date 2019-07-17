@@ -14,14 +14,15 @@ class ApiList extends Component {
     }
 
     loadData = async () => {
-        console.log('hi there', this.props)
+        //console.log('hi there', this.props)
+        const apiKey = process.env.REACT_APP_API_KEY;
         const rank = this.props.match.params.rank;
         const division = this.props.match.params.division;
         const proxyurl = "https://cors-anywhere.herokuapp.com/";
-        const url = `https://na1.api.riotgames.com/lol/league/v4/entries/RANKED_SOLO_5x5/${rank}/${division}?page=1&api_key=RGAPI-2d6c539c-756d-44e3-a755-0056a0635ba2`;
+        const url = `https://na1.api.riotgames.com/lol/league/v4/entries/RANKED_SOLO_5x5/${rank}/${division}?page=1&api_key=${apiKey}`;
         const response = await fetch(proxyurl + url);
         const data = response.json();
-        return data
+        return data;
     }
 
     render() {
