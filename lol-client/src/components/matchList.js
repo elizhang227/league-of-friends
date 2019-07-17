@@ -22,10 +22,14 @@ class MatchList extends Component {
         for (let i=0; i < poo.length; i++) {
             //console.log(matches.matches[0].champion)
             const x = matches.matches;
-            console.log('x', x)
-            if (parseInt(poo[i].key) === x[i].champion) {
-                console.log('it works')
+            //console.log('x', x[i].champion)
+            // if (parseInt(poo[i].key) === x[i].champion) {
+            //     console.log('it works')
+            // }
+            if (x[i].champion === TypeError) {
+                console.log(x)
             }
+
         }
         this.setState({
             userInfo: userInfo,
