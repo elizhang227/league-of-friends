@@ -9,14 +9,27 @@ class MatchList extends Component {
 
     async componentDidMount() {
         const championInfo = await this.loadChampionInfo();
+        console.log('champ info', championInfo.data)
+        const data = championInfo.data;
         const userInfo = await this.loadUserInfo();
+        const matches = await this.loadData(userInfo.accountId);
+
+        let poo = [];
+        for (let [key, value] of Object.entries(data)) {
+            poo.push({name: `${key}`, key: `${value.key}`})
+        }
+
+        for (let i=0; i < poo.length; i++) {
+            //console.log(matches.matches[0].champion)
+            const x = matches.matches;
+            console.log('x', x)
+            if (parseInt(poo[i].key) === x[i].champion) {
+                console.log('it works')
+            }
+        }
         this.setState({
             userInfo: userInfo,
-            test: championInfo.data
-        })
-        const matches = await this.loadData(this.state.userInfo.accountId);
-        //nested object so need matches.matches
-        this.setState({
+            test: championInfo.data,
             matches: matches.matches
         })
     }
@@ -45,24 +58,16 @@ class MatchList extends Component {
         const data = response.json();
         return data;
     }
-
-    // test = async (poo, matches) => {
-    //     //console.log('hihihi')
-    //     for (let i=0; i < poo.length; i++) {
-    //         if (poo[i].key === matches[i].champion) {
-    //             console.log('it works')
-    //         }
-    //     }
-    // }
     
     render() {
         const { matches, userInfo, test } = this.state
-        let poo = [];
-        for (let [key, value] of Object.entries(test)) {
-            poo.push({name: `${key}`, key: `${value.key}`})
-        }
+        // let poo = [];
+        // for (let [key, value] of Object.entries(test)) {
+        //     poo.push({name: `${key}`, key: `${value.key}`})
+        // }
 
-        console.log('this is matches', matches)
+        //console.log('this is matches', matches[0])
+        //console.log('poo', poo[0])
 
         return (
             <div>
