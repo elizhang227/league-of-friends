@@ -4,7 +4,6 @@ class MatchList extends Component {
     state = {
         matches: [],
         userInfo: [],
-        test: []
     }
 
     async componentDidMount() {
@@ -18,23 +17,23 @@ class MatchList extends Component {
         for (let [key, value] of Object.entries(data)) {
             poo.push({name: `${key}`, key: `${value.key}`})
         }
-
+        //console.log(poo)
+        let x = await matches.matches;
         for (let i=0; i < poo.length; i++) {
-            //console.log(matches.matches[0].champion)
-            const x = matches.matches;
-            //console.log('x', x[i].champion)
-            // if (parseInt(poo[i].key) === x[i].champion) {
-            //     console.log('it works')
-            // }
-            if (x[i].champion === TypeError) {
-                console.log(x)
+            // const x = await matches.matches;
+            //console.log('x', x[i])
+            for (let j=0; j < 100; j++) {
+                if (parseInt(poo[i].key) === x[j].champion) {
+                    console.log(poo[i].name)
+                    x[j].champion = poo[i].name;
+                    console.log('new value,', x[j].champion)
+                }
             }
-
         }
+
         this.setState({
             userInfo: userInfo,
-            test: championInfo.data,
-            matches: matches.matches
+            matches: x
         })
     }
 
@@ -64,33 +63,20 @@ class MatchList extends Component {
     }
     
     render() {
-        const { matches, userInfo, test } = this.state
-        // let poo = [];
-        // for (let [key, value] of Object.entries(test)) {
-        //     poo.push({name: `${key}`, key: `${value.key}`})
-        // }
-
-        //console.log('this is matches', matches[0])
-        //console.log('poo', poo[0])
-
+        const { matches, userInfo } = this.state
         return (
             <div>
                 <h2>list of matches</h2>
                 <ul>
-                    {matches.map((match, index) => {
-                        
-                        // this.test(poo, matches)
-                        return (
+                    {matches.map((match, index) => 
                         <li key={`match${index}`}>
-                            <p>{test.id}</p>
                             <p>Champion: {match.champion}</p>
                             <p>TimeStamp: {match.timestamp}</p>
                             <p>Queue: {match.queue}</p>
                             <p>Role: {match.role}</p>
                             <p>Lane: {match.lane}</p>
                         </li>
-                        )
-                    })}
+                    )}
                 </ul>
             </div>
         )
