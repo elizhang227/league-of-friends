@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import CandidatesList from './components/candidatesList';
 import ApiList from './components/apiList';
 import ChooseTier from './components/chooseTier';
-import MatchList from './components/matchList';
+import SoloMatchList from './components/soloMatchList';
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
         <Route path='/' exact component={CandidatesList} />
         <Route path='/tier' component={ChooseTier} />
         <Route path='/test/:rank?/:division?' component={ApiList} />
-        <Route path='/matches/:ign?' component={MatchList} /> 
+        <Route path='/matches/:ign?' component={SoloMatchList} /> 
       </Router>
     </div>
   );
