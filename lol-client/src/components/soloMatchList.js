@@ -28,28 +28,18 @@ const StatsLi = styled.li`
     list-style-type: none;
 `;
 
-async function test(a, b) {
-    for (let i=0; i < 10; i++) {
-        for (let j=0; j < 2; j++) {
-            if (a[i].teamId === b[j].teamId) {
-                //console.log(b[j].win)
-                return b[j].win
-            }
-        }
-    }
-}
-
 const WinStatus = props => {
+    // console.log('props', props)
+    console.log('hi', props.winStatus)
     return (props.winStatus !== undefined ?
         <h2>
-            {props.winStatus.teams.map((team, index) => 
-                team.win
-            )}
+            {props.winStatus}
         </h2>
         : null);
 }
 
 const GameInfo = props => {
+    //console.log('ginfo props', props)
     return (props.gameInfo !== undefined ? 
         <ul>
             {props.gameInfo.participantIdentities.map((player, index) => 
@@ -78,7 +68,7 @@ class SoloMatchList extends Component {
         matches: [],
         userInfo: [],
         gameInfo: [],
-        participiant: []
+        result: []
     }
 
     async componentDidMount() {
@@ -123,25 +113,21 @@ class SoloMatchList extends Component {
         }
         console.log('matchdata', matchData)
 
-        let participant = [];
-        let team = [];
         let status = [];
         for (let i=0; i < 10; i++) {
             //console.log('pler acc id', userInfo.accountId)
+            // Looping through participantIdentities to find out what the pId is for the specific user
             for (let j=0; j < 10; j++) {
                 if (matchData[i].participantIdentities[j].player.accountId === userInfo.accountId) {
                     //console.log('participant id', matchData[i].participantIdentities[j].participantId)
                     let pId = matchData[i].participantIdentities[j].participantId;
-
                     if (pId === matchData[i].participants[j].participantId) {
                         //console.log('team id', matchData[i].participants[j].teamId)
                         let teamId = matchData[i].participants[j].teamId;
-                        //team.push(teamId);
-                        //console.log('test1', matchData[i].teams[0])
-                        //console.log('test2', matchData[i].teams[1])
+                        // Looping through teams to find the result of the team the user was from
                         for (let k=0; k < 2; k++) {
                             if (teamId === matchData[i].teams[k].teamId) {
-                                console.log('win status', matchData[i].teams[k].win)
+                                //console.log('win status', matchData[i].teams[k].win)
                                 let result = matchData[i].teams[k].win;
                                 status.push(result);
                             }
@@ -151,15 +137,13 @@ class SoloMatchList extends Component {
                 }
             }
         }
-        console.log('p array', participant)
-        console.log('t array', team)
-        console.log('s array', status)
+        //console.log('s array', status)
 
         this.setState({
             userInfo: userInfo,
             matches: x,
             gameInfo: matchData,
-            participant: participant
+            result: status
         })
     }
 
@@ -210,10 +194,11 @@ class SoloMatchList extends Component {
     }
     
     render() {
-        const { matches, userInfo, gameInfo } = this.state
-        //console.log('gameInfo', gameInfo)
+        const { matches, userInfo, gameInfo, result } = this.state
+        console.log('gameInfo', gameInfo)
         //console.log('matches', matches)
         //console.log('userInfo', userInfo);
+        console.log('result', result)
         return (
             <div>
                 <StyledHeader>Match History</StyledHeader>
@@ -222,7 +207,7 @@ class SoloMatchList extends Component {
                         //console.log('index', gameInfo[index])
                         return (
                         <StyledLi key={`match${index}`}>
-                            <WinStatus winStatus={gameInfo[index]} />
+                            <WinStatus winStatus={result[index]} />
                             <p>Champion: {match.champion}</p>
                             <p>TimeStamp: {match.timestamp}</p>
                             <p>Queue: {match.queue}</p>
