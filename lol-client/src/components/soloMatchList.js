@@ -29,8 +29,6 @@ const StatsLi = styled.li`
 `;
 
 const WinStatus = props => {
-    // console.log('props', props)
-    console.log('hi', props.winStatus)
     return (props.winStatus !== undefined ?
         <h2>
             {props.winStatus}
@@ -73,29 +71,25 @@ class SoloMatchList extends Component {
 
     async componentDidMount() {
         const championInfo = await this.loadChampionInfo();
-        //console.log('champ info', championInfo.data)
         const data = championInfo.data;
         const userInfo = await this.loadUserInfo();
         const matches = await this.loadData(userInfo.accountId);
-        const foo = await this.loadUserName(userInfo.accountId)
-        console.log('foo', foo.name)
-        //console.log('matches', matches)
-        //const matchInfo = await this.loadMatchInfo();
+        //const foo = await this.loadUserName(userInfo.accountId)
 
-        let poo = [];
+        let championArray = [];
         for (let [key, value] of Object.entries(data)) {
-            poo.push({name: `${key}`, key: `${value.key}`})
+            championArray.push({name: `${key}`, key: `${value.key}`})
         }
-        //console.log(poo)
+        //console.log(championArray)
         let x = await matches.matches;
         //console.log('length', x.length)
-        for (let i=0; i < poo.length; i++) {
+        for (let i=0; i < championArray.length; i++) {
             //console.log('x', x)
             for (let j=0; j < x.length; j++) {
                 for (let k=0; k < 6; k++) {
                     //console.log(j, x[j].gameId)
-                    if (parseInt(poo[i].key) === x[j].champion) {
-                        x[j].champion = poo[i].name;
+                    if (parseInt(championArray[i].key) === x[j].champion) {
+                        x[j].champion = championArray[i].name;
                         //console.log('new value,', x[j].champion)
                     }
                     if (x[j].queue === mapInfo[k].queue) {
@@ -111,7 +105,6 @@ class SoloMatchList extends Component {
             let matchInfo = await this.loadMatchInfo(x[i].gameId)
             matchData.push(matchInfo)
         }
-        console.log('matchdata', matchData)
 
         let status = [];
         for (let i=0; i < 10; i++) {
@@ -201,7 +194,7 @@ class SoloMatchList extends Component {
         console.log('result', result)
         return (
             <div>
-                <StyledHeader>Match History</StyledHeader>
+                <StyledHeader>{userInfo.name}'s Match History</StyledHeader>
                 <StyledUl>
                     {matches.map((match, index) => {
                         //console.log('index', gameInfo[index])
