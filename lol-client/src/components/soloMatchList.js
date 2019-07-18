@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+
+import WinStatus from './winStatus';
 const mapInfo = require('../data').mapInfo;
+
+
 
 const StyledHeader = styled.h2`
     display: flex;
@@ -8,6 +12,7 @@ const StyledHeader = styled.h2`
 `;
 
 const StyledLi = styled.li`
+    display: flex;
     list-style-type: none;
     border-bottom: 3px solid red;
     margin-bottom: 30px;
@@ -27,14 +32,6 @@ const StyledDiv = styled.div`
 const StatsLi = styled.li`
     list-style-type: none;
 `;
-
-const WinStatus = props => {
-    return (props.winStatus !== undefined ?
-        <h2>
-            {props.winStatus}
-        </h2>
-        : null);
-}
 
 const GameInfo = props => {
     //console.log('ginfo props', props)
@@ -122,6 +119,11 @@ class SoloMatchList extends Component {
                             if (teamId === matchData[i].teams[k].teamId) {
                                 //console.log('win status', matchData[i].teams[k].win)
                                 let result = matchData[i].teams[k].win;
+                                if (result === 'Win') {
+                                    result = 'Victory'
+                                } else if (result === 'Fail'){
+                                    result = 'Defeat'
+                                }
                                 status.push(result);
                             }
                         }
@@ -200,12 +202,14 @@ class SoloMatchList extends Component {
                         //console.log('index', gameInfo[index])
                         return (
                         <StyledLi key={`match${index}`}>
-                            <WinStatus winStatus={result[index]} />
-                            <p>Champion: {match.champion}</p>
-                            <p>TimeStamp: {match.timestamp}</p>
-                            <p>Queue: {match.queue}</p>
-                            <p>Role: {match.role}</p>
-                            <p>Lane: {match.lane}</p>
+                            <div>
+                                <WinStatus winStatus={result[index]} />
+                                <p>Champion: {match.champion}</p>
+                                <p>TimeStamp: {match.timestamp}</p>
+                                <p>Queue: {match.queue}</p>
+                                <p>Role: {match.role}</p>
+                                <p>Lane: {match.lane}</p>
+                            </div>
                             <StyledDiv>
                                 <GameInfo gameInfo={gameInfo[index]} />
                                 <KdaInfo kdaInfo={gameInfo[index]} />
