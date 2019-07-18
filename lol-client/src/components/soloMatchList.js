@@ -2,61 +2,13 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import WinStatus from './winStatus';
+import NameInfo from './nameInfo';
+import KdaInfo from './kdaInfo';
+
+import '../css/soloMatchList.css';
+import { StyledHeader, StyledLi, StyledUl, StyledDiv } from './styledComponents';
+
 const mapInfo = require('../data').mapInfo;
-
-
-
-const StyledHeader = styled.h2`
-    display: flex;
-    justify-content: center;
-`;
-
-const StyledLi = styled.li`
-    display: flex;
-    list-style-type: none;
-    border-bottom: 3px solid red;
-    margin-bottom: 30px;
-    padding-bottom: 30px;
-`;
-
-const StyledUl = styled.ul`
-    display: flex;
-    flex-direction: column;
-    padding: 0 10px;
-`;
-
-const StyledDiv = styled.div`
-    display: flex;
-`;
-
-const StatsLi = styled.li`
-    list-style-type: none;
-`;
-
-const GameInfo = props => {
-    //console.log('ginfo props', props)
-    return (props.gameInfo !== undefined ? 
-        <ul>
-            {props.gameInfo.participantIdentities.map((player, index) => 
-                <StatsLi key={`player${index}`}>
-                    <b>Player: </b>{player.player.summonerName}
-                </StatsLi>)}
-        </ul> 
-        : null);
-}
-
-const KdaInfo = props => {
-    //console.log('props', props)
-    return (props.kdaInfo !== undefined ? 
-        <ul>
-            {props.kdaInfo.participants.map((kda, index) => 
-                <StatsLi key={`stats${index}`}>
-                    <b>kills: </b>{kda.stats.kills} <b>deaths: </b>{kda.stats.deaths} <b>assists: </b>{kda.stats.assists}
-                </StatsLi>)}
-        </ul> 
-        : null);
-}
-
 
 class SoloMatchList extends Component {
     state = {
@@ -144,7 +96,7 @@ class SoloMatchList extends Component {
 
     loadUserName = async (accountId) => {
         const apiKey = process.env.REACT_APP_API_KEY;
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        const proxyurl = "http://localhost:3001/";
         const url = `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-account/${accountId}?api_key=${apiKey}`
         const response = await fetch(proxyurl + url);
         const data = response.json();
@@ -155,7 +107,7 @@ class SoloMatchList extends Component {
         //console.log('this is props', this.props.match.params.ign)
         const apiKey = process.env.REACT_APP_API_KEY;
         const ign = this.props.match.params.ign;
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        const proxyurl = "http://localhost:3001/";
         const url = `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${ign}?api_key=${apiKey}`;
         const response = await fetch(proxyurl + url);
         const data = response.json();
@@ -164,7 +116,7 @@ class SoloMatchList extends Component {
 
     loadData = async (id) => {
         const apiKey = process.env.REACT_APP_API_KEY;
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        const proxyurl = "http://localhost:3001/";
         // only getting ranked solo entries
         const url = `https://na1.api.riotgames.com/lol/match/v4/matchlists/by-account/${id}?queue=420&season=13&beginIndex=0&api_key=${apiKey}`;
         const response = await fetch(proxyurl + url);
@@ -181,7 +133,7 @@ class SoloMatchList extends Component {
 
     loadMatchInfo = async (matchId) => {
         const apiKey = process.env.REACT_APP_API_KEY;
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        const proxyurl = "http://localhost:3001/";
         const url = `https://na1.api.riotgames.com/lol/match/v4/matches/${matchId}?api_key=${apiKey}`
         const response = await fetch (proxyurl + url);
         const data = response.json();
@@ -201,7 +153,7 @@ class SoloMatchList extends Component {
                     {matches.map((match, index) => {
                         //console.log('index', gameInfo[index])
                         return (
-                        <StyledLi key={`match${index}`}>
+                        <StyledLi key={`match${index}`} className={result[index]}>
                             <div>
                                 <WinStatus winStatus={result[index]} />
                                 <p>Champion: {match.champion}</p>
@@ -211,7 +163,7 @@ class SoloMatchList extends Component {
                                 <p>Lane: {match.lane}</p>
                             </div>
                             <StyledDiv>
-                                <GameInfo gameInfo={gameInfo[index]} />
+                                <NameInfo nameInfo={gameInfo[index]} />
                                 <KdaInfo kdaInfo={gameInfo[index]} />
                             </StyledDiv>
                         </StyledLi>

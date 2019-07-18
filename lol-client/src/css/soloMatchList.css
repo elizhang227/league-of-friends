@@ -1,0 +1,15 @@
+.Defeat {
+    background-color: #E2B6B3;
+}
+
+.Defeat h2 {
+    color: #c6443e;
+}
+
+.Victory {
+    background-color: #a3cfec;
+}
+
+.Victory h2 {
+    color: #1a78ae;
+}
