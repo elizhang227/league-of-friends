@@ -1,0 +1,17 @@
+body {
+    background-color: #EAEAEA;
+}
+
+.api-h2 {
+    display: flex;
+    justify-content: center;
+}
+
+.api-li {
+    list-style-type: none;
+    margin-bottom: 20px;
+}
+
+.api-p {
+    margin: 5px 0 0;
+}

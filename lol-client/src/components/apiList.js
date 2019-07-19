@@ -1,5 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+import '../css/apiList.css';
+
+const Wins = styled.b`
+    color: green;
+`;
+
+const Losses = styled.b`
+    color: red;
+`;
 
 class ApiList extends Component {
     state = {
@@ -32,12 +43,12 @@ class ApiList extends Component {
         const division = this.props.match.params.division;
         return (
             <div>
-                <h2>List of {rank} {division} Players</h2>
+                <h2 className='api-h2'>{rank} {division} Players</h2>
                 <ul>
                     {people.map((person, index) => 
-                        <li key={`person${index}`}>
+                        <li key={`person${index}`} className='api-li'>
                             <Link to={`/matches/${person.summonerName}`}>{person.summonerName}</Link>
-                            <p>Win Ratio: {(person.wins / (person.wins + person.losses) * 100).toFixed(2)}% {person.wins}W {person.losses}L</p>
+                            <p className='api-p'><b>Win Ratio: </b>{(person.wins / (person.wins + person.losses) * 100).toFixed(2)}% <Wins>{person.wins}W</Wins> <Losses>{person.losses}L</Losses></p>
                         </li>
                     )}
                 </ul>

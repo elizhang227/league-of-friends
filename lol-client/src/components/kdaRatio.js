@@ -5,12 +5,8 @@ const StatsLi = styled.li`
     list-style-type: none;
 `;
 
-const DeathB = styled.b`
-    color: #c6443e;
-`;
-
-const OtherB = styled.b`
-    color: #555e5e;
+const StyledB = styled.b`
+    color: c6443e
 `;
 
 const StyledDiv = styled.div`
@@ -20,15 +16,16 @@ const StyledDiv = styled.div`
 
 const StyledUl = styled.ul`
     margin-bottom: 5px;
-    @media only screen and (max-width:412px) {
-        padding-left: 5px;
+    @media only screen and (max-width:556px) {
+        display: none;
     }
 `;
 
 const BottomUl = styled.ul`
-    @media only screen and (max-width:412px) {
-        padding-left: 5px;
-}
+    @media only screen and (max-width:556px) {
+    display: none;
+    }
+}   
 `;
 
 const StyledH3 = styled.h3`
@@ -37,26 +34,26 @@ const StyledH3 = styled.h3`
     visibility: hidden;
 `;
 
-const KdaInfo = props => {
+const KdaRatio = props => {
     //console.log('props', props)
-    return (props.kdaInfo !== undefined ? 
+    return (props.kdaRatio !== undefined ? 
         <StyledDiv>
             <StyledUl>
                 <StyledH3>A</StyledH3>
-                {props.kdaInfo.participants.slice(0,5).map((kda, index) => 
+                {props.kdaRatio.participants.slice(0,5).map((kda, index) => 
                     <StatsLi key={`stats${index}`}>
-                        <OtherB>{kda.stats.kills}</OtherB> / <DeathB>{kda.stats.deaths}</DeathB> / <OtherB>{kda.stats.assists}</OtherB>
+                        <StyledB>{((kda.stats.kills + kda.stats.assists) / kda.stats.deaths).toFixed(2)}:1</StyledB> KDA
                     </StatsLi>)}
             </StyledUl>
             <BottomUl>
                 <StyledH3>B</StyledH3>
-                {props.kdaInfo.participants.slice(5,10).map((kda, index) => 
+                {props.kdaRatio.participants.slice(5,10).map((kda, index) => 
                     <StatsLi key={`stats${index}`}>
-                        <OtherB>{kda.stats.kills}</OtherB> / <DeathB>{kda.stats.deaths}</DeathB> / <OtherB>{kda.stats.assists}</OtherB>
+                        <StyledB>{((kda.stats.kills + kda.stats.assists) / kda.stats.deaths).toFixed(2)}:1</StyledB> KDA
                     </StatsLi>)}
             </BottomUl>
         </StyledDiv>
         : null);
 }
 
-export default KdaInfo;
+export default KdaRatio;

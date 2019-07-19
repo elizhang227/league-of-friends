@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 
 import WinStatus from './winStatus';
 import NameInfo from './nameInfo';
 import KdaInfo from './kdaInfo';
+import KdaRatio from './kdaRatio';
 
 import '../css/soloMatchList.css';
-import { StyledHeader, StyledLi, StyledUl, StyledDiv } from './styledComponents';
+import { StyledHeader, StyledLi, StyledUl, StyledDiv, StyledP, RankInfoP, TimeInfoP, StyledImg } from './styledComponents';
 
 const mapInfo = require('../data').mapInfo;
+const moment = require('moment');
 
 class SoloMatchList extends Component {
     state = {
@@ -49,14 +50,14 @@ class SoloMatchList extends Component {
         }
 
         let matchData = [];
-        for (let i=0; i< 10; i++) {
+        for (let i=0; i< 20; i++) {
             //console.log(i, x[i].gameId)
             let matchInfo = await this.loadMatchInfo(x[i].gameId)
             matchData.push(matchInfo)
         }
 
         let status = [];
-        for (let i=0; i < 10; i++) {
+        for (let i=0; i < 20; i++) {
             //console.log('pler acc id', userInfo.accountId)
             // Looping through participantIdentities to find out what the pId is for the specific user
             for (let j=0; j < 10; j++) {
@@ -142,34 +143,42 @@ class SoloMatchList extends Component {
     
     render() {
         const { matches, userInfo, gameInfo, result } = this.state
-        console.log('gameInfo', gameInfo)
+        //console.log('gameInfo', gameInfo)
         //console.log('matches', matches)
         //console.log('userInfo', userInfo);
-        console.log('result', result)
+        //console.log('result', result)
         return (
             <div>
-                <StyledHeader>{userInfo.name}'s Match History</StyledHeader>
-                <StyledUl>
-                    {matches.map((match, index) => {
-                        //console.log('index', gameInfo[index])
-                        return (
-                        <StyledLi key={`match${index}`} className={result[index]}>
-                            <div>
-                                <WinStatus winStatus={result[index]} />
-                                <p>Champion: {match.champion}</p>
-                                <p>TimeStamp: {match.timestamp}</p>
-                                <p>Queue: {match.queue}</p>
-                                <p>Role: {match.role}</p>
-                                <p>Lane: {match.lane}</p>
-                            </div>
-                            <StyledDiv>
-                                <NameInfo nameInfo={gameInfo[index]} />
-                                <KdaInfo kdaInfo={gameInfo[index]} />
-                            </StyledDiv>
-                        </StyledLi>
-                        )
-                    })}
-                </StyledUl>
+                {gameInfo.length === 0 ?
+                    <div className="lds-hourglass"></div>
+                    :
+                    <>
+                        <StyledHeader>{userInfo.name}'s Match History</StyledHeader>
+                        <StyledUl>
+                            {matches.map((match, index) => {
+                                //console.log('index', gameInfo[index])
+                                return (
+                                <StyledLi key={`match${index}`} className={result[index]}>
+                                    <div>
+                                        <WinStatus winStatus={result[index]} />
+                                        <StyledImg src={`https://opgg-static.akamaized.net/images/lol/champion/${match.champion}.png?image=w_100&v=1`} />
+                                        <StyledP>{match.champion}</StyledP>
+                                        <RankInfoP>{match.queue}</RankInfoP>
+                                        <TimeInfoP>{moment(match.timestamp).fromNow()}</TimeInfoP>
+                                        {/* <p>Role: {match.role}</p>
+                                        <p>Lane: {match.lane}</p> */}
+                                    </div>
+                                    <StyledDiv>
+                                        <NameInfo nameInfo={gameInfo[index]} />
+                                        <KdaInfo kdaInfo={gameInfo[index]} />
+                                        <KdaRatio kdaRatio={gameInfo[index]} />
+                                    </StyledDiv>
+                                </StyledLi>
+                                )
+                            })}
+                        </StyledUl>
+                    </>
+                }
             </div>
         )
     }
