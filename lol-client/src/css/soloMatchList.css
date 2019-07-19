@@ -1,6 +1,8 @@
 .Defeat {
     background-color: #E2B6B3;
     margin: auto auto 30px;
+    border-radius: 10px;
+    box-shadow: 5px 10px 10px #888888;
 }
 
 .Defeat h2 {
@@ -12,6 +14,8 @@
 .Victory {
     background-color: #a3cfec;
     margin: auto auto 30px;
+    border-radius: 10px;
+    box-shadow: 5px 10px 10px #888888;
 }
 
 .Victory h2 {
