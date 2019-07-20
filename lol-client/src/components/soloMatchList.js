@@ -24,7 +24,6 @@ class SoloMatchList extends Component {
         const data = championInfo.data;
         const userInfo = await this.loadUserInfo();
         const matches = await this.loadData(userInfo.accountId);
-        //const foo = await this.loadUserName(userInfo.accountId)
 
         let championArray = [];
         for (let [key, value] of Object.entries(data)) {
@@ -141,7 +140,6 @@ class SoloMatchList extends Component {
                         <StyledHeader>{userInfo.name}'s Match History</StyledHeader>
                         <StyledUl>
                             {matches.map((match, index) => {
-                                //console.log('index', gameInfo[index])
                                 return (
                                 <StyledLi key={`match${index}`} className={result[index]}>
                                     <div>

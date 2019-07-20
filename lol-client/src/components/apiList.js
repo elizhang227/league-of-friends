@@ -25,7 +25,6 @@ class ApiList extends Component {
     }
 
     loadData = async () => {
-        //console.log('hi there', this.props)
         const apiKey = process.env.REACT_APP_API_KEY;
         const rank = this.props.match.params.rank;
         const division = this.props.match.params.division;

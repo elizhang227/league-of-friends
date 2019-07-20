@@ -35,7 +35,6 @@ const StyledH3 = styled.h3`
 `;
 
 const KdaRatio = props => {
-    //console.log('props', props)
     return (props.kdaRatio !== undefined ? 
         <StyledDiv>
             <StyledUl>

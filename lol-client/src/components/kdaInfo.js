@@ -38,7 +38,6 @@ const StyledH3 = styled.h3`
 `;
 
 const KdaInfo = props => {
-    //console.log('props', props)
     return (props.kdaInfo !== undefined ? 
         <StyledDiv>
             <StyledUl>

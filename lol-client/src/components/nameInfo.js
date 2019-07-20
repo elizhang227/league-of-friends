@@ -29,7 +29,6 @@ const StyledH3 = styled.h3`
 `;
 
 const NameInfo = props => {
-    //console.log('ginfo props', props)
     return (props.nameInfo !== undefined ? 
         <StyledDiv>
             <StyledUl>

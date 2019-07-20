@@ -22,7 +22,6 @@ class CandidatesList extends Component {
 
     render() {
         const { candidates } = this.state;
-        console.log('this is candidates', candidates)
         return (
             <div>
                 <h1>Candidate List</h1>
