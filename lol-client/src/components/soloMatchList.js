@@ -30,17 +30,14 @@ class SoloMatchList extends Component {
         for (let [key, value] of Object.entries(data)) {
             championArray.push({name: `${key}`, key: `${value.key}`})
         }
-        //console.log(championArray)
+
         let x = await matches.matches;
-        //console.log('length', x.length)
+
         for (let i=0; i < championArray.length; i++) {
-            //console.log('x', x)
             for (let j=0; j < x.length; j++) {
                 for (let k=0; k < 6; k++) {
-                    //console.log(j, x[j].gameId)
                     if (parseInt(championArray[i].key) === x[j].champion) {
                         x[j].champion = championArray[i].name;
-                        //console.log('new value,', x[j].champion)
                     }
                     if (x[j].queue === mapInfo[k].queue) {
                         x[j].queue = mapInfo[k].type
@@ -51,26 +48,21 @@ class SoloMatchList extends Component {
 
         let matchData = [];
         for (let i=0; i< 20; i++) {
-            //console.log(i, x[i].gameId)
             let matchInfo = await this.loadMatchInfo(x[i].gameId)
             matchData.push(matchInfo)
         }
 
         let status = [];
         for (let i=0; i < 20; i++) {
-            //console.log('pler acc id', userInfo.accountId)
             // Looping through participantIdentities to find out what the pId is for the specific user
             for (let j=0; j < 10; j++) {
                 if (matchData[i].participantIdentities[j].player.accountId === userInfo.accountId) {
-                    //console.log('participant id', matchData[i].participantIdentities[j].participantId)
                     let pId = matchData[i].participantIdentities[j].participantId;
                     if (pId === matchData[i].participants[j].participantId) {
-                        //console.log('team id', matchData[i].participants[j].teamId)
                         let teamId = matchData[i].participants[j].teamId;
                         // Looping through teams to find the result of the team the user was from
                         for (let k=0; k < 2; k++) {
                             if (teamId === matchData[i].teams[k].teamId) {
-                                //console.log('win status', matchData[i].teams[k].win)
                                 let result = matchData[i].teams[k].win;
                                 if (result === 'Win') {
                                     result = 'Victory'
@@ -81,11 +73,9 @@ class SoloMatchList extends Component {
                             }
                         }
                     }
-                    //participant.push(pId);
                 }
             }
         }
-        //console.log('s array', status)
 
         this.setState({
             userInfo: userInfo,
@@ -105,7 +95,6 @@ class SoloMatchList extends Component {
     }
 
     loadUserInfo = async () => {
-        //console.log('this is props', this.props.match.params.ign)
         const apiKey = process.env.REACT_APP_API_KEY;
         const ign = this.props.match.params.ign;
         const proxyurl = "http://localhost:3001/";
@@ -143,10 +132,6 @@ class SoloMatchList extends Component {
     
     render() {
         const { matches, userInfo, gameInfo, result } = this.state
-        //console.log('gameInfo', gameInfo)
-        //console.log('matches', matches)
-        //console.log('userInfo', userInfo);
-        //console.log('result', result)
         return (
             <div>
                 {gameInfo.length === 0 ?
@@ -165,8 +150,6 @@ class SoloMatchList extends Component {
                                         <StyledP>{match.champion}</StyledP>
                                         <RankInfoP>{match.queue}</RankInfoP>
                                         <TimeInfoP>{moment(match.timestamp).fromNow()}</TimeInfoP>
-                                        {/* <p>Role: {match.role}</p>
-                                        <p>Lane: {match.lane}</p> */}
                                     </div>
                                     <StyledDiv>
                                         <NameInfo nameInfo={gameInfo[index]} />
