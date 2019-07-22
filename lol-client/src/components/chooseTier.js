@@ -9,7 +9,6 @@ class ChooseTier extends Component {
     }
 
     handleTierClick = async (e) => {
-        //console.log(e.target.value)
         let value = e.target.value;
         let rank = value.toUpperCase();
         this.setState({
@@ -18,7 +17,6 @@ class ChooseTier extends Component {
     }
 
     handleDivisionClick = async (e) => {
-        //console.log(e.target.value)
         let division = e.target.value;
         this.setState({
             division: division

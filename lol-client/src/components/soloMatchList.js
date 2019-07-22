@@ -31,10 +31,10 @@ class SoloMatchList extends Component {
         }
 
         let x = await matches.matches;
-
         for (let i=0; i < championArray.length; i++) {
             for (let j=0; j < x.length; j++) {
                 for (let k=0; k < 6; k++) {
+                    // Reassigning actual names to champions rather than returning a number
                     if (parseInt(championArray[i].key) === x[j].champion) {
                         x[j].champion = championArray[i].name;
                     }
